@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/widget_root" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:padding="18dp" android:background="@drawable/widget_bg">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="top">
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="horizontal" android:gravity="center_vertical|start">
+            <ImageView android:id="@+id/widget_moon" android:layout_width="22dp" android:layout_height="22dp" android:src="@drawable/ic_widget_moon" android:layout_marginEnd="8dp"/>
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical">
+                <TextView android:id="@+id/widget_label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#2E1C4E" android:textSize="12sp" android:alpha="0.85"/>
+                <TextView android:id="@+id/widget_countdown" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#2E1C4E" android:textSize="28sp" android:textStyle="bold"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="end">
+            <ImageView android:id="@+id/widget_badge" android:layout_width="38dp" android:layout_height="38dp" android:src="@drawable/widget_badge"/>
+            <TextView android:id="@+id/widget_location" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:textColor="#2E1C4E" android:textSize="13sp" android:textStyle="bold" android:gravity="end"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="16dp">
+        <TextView android:id="@+id/widget_hijri" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:background="@drawable/widget_pill_bg" android:paddingHorizontal="14dp" android:paddingVertical="10dp" android:textColor="#2E1C4E" android:textSize="12sp" android:gravity="center"/>
+        <View android:layout_width="10dp" android:layout_height="1dp"/>
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="horizontal" android:gravity="center" android:background="@drawable/widget_pill_bg" android:paddingHorizontal="14dp" android:paddingVertical="10dp">
+            <TextView android:id="@+id/widget_sunrise" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#2E1C4E" android:textSize="12sp" android:layout_marginEnd="6dp"/>
+            <ImageView android:layout_width="16dp" android:layout_height="16dp" android:src="@drawable/ic_widget_sunrise"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/widget_row_prayers" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="16dp">
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+            <TextView android:id="@+id/widget_p1_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#2E1C4E" android:textSize="11sp" android:alpha="0.8"/>
+            <TextView android:id="@+id/widget_p1_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#2E1C4E" android:textSize="14sp" android:textStyle="bold" android:layout_marginTop="2dp"/>
+            <View android:id="@+id/widget_p1_mark" android:layout_width="18dp" android:layout_height="3dp" android:layout_marginTop="6dp" android:background="@drawable/widget_underline" android:visibility="gone"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+            <TextView android:id="@+id/widget_p2_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#2E1C4E" android:textSize="11sp" android:alpha="0.8"/>
+            <TextView android:id="@+id/widget_p2_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#2E1C4E" android:textSize="14sp" android:textStyle="bold" android:layout_marginTop="2dp"/>
+            <View android:id="@+id/widget_p2_mark" android:layout_width="18dp" android:layout_height="3dp" android:layout_marginTop="6dp" android:background="@drawable/widget_underline" android:visibility="gone"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+            <TextView android:id="@+id/widget_p3_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#2E1C4E" android:textSize="11sp" android:alpha="0.8"/>
+            <TextView android:id="@+id/widget_p3_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#2E1C4E" android:textSize="14sp" android:textStyle="bold" android:layout_marginTop="2dp"/>
+            <View android:id="@+id/widget_p3_mark" android:layout_width="18dp" android:layout_height="3dp" android:layout_marginTop="6dp" android:background="@drawable/widget_underline" android:visibility="gone"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+            <TextView android:id="@+id/widget_p4_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#2E1C4E" android:textSize="11sp" android:alpha="0.8"/>
+            <TextView android:id="@+id/widget_p4_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#2E1C4E" android:textSize="14sp" android:textStyle="bold" android:layout_marginTop="2dp"/>
+            <View android:id="@+id/widget_p4_mark" android:layout_width="18dp" android:layout_height="3dp" android:layout_marginTop="6dp" android:background="@drawable/widget_underline" android:visibility="gone"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+            <TextView android:id="@+id/widget_p5_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#2E1C4E" android:textSize="11sp" android:alpha="0.8"/>
+            <TextView android:id="@+id/widget_p5_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#2E1C4E" android:textSize="14sp" android:textStyle="bold" android:layout_marginTop="2dp"/>
+            <View android:id="@+id/widget_p5_mark" android:layout_width="18dp" android:layout_height="3dp" android:layout_marginTop="6dp" android:background="@drawable/widget_underline" android:visibility="gone"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
