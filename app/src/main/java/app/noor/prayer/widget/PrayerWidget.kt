@@ -70,7 +70,7 @@ class PrayerWidget: AppWidgetProvider() {
 
             val zone = location.zone()
             val now = Instant.now()
-            val timeFormat = DateTimeFormatter.ofPattern(clockPattern(settings.clockFormat,context),Locale.US)
+            val timeFormat = DateTimeFormatter.ofPattern(clockPattern(settings.clockFormat,context,includeMeridiem = false),Locale.US)
             val today = entry.engine().calculate(now.atZone(zone).toLocalDate(),settings)
             val next = entry.engine().next(settings,now)
 
