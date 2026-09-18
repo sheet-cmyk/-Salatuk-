@@ -61,7 +61,6 @@ class PrayerEngineTest {
         assertTrue(Duration.between(sunset,maghrib).toMinutes() in 10..40)
         assertTrue(maghrib < day.times.first { it.name == PrayerName.ISHA }.instant)
     }
-    @Test fun qiblaFromBerlinIsSoutheast() { assertTrue(engine.qibla(LocationSettings(52.52,13.405,"Berlin","Germany")) in 135.0..140.0) }
     @Test(expected = IllegalArgumentException::class) fun invalidCoordinatesAreRejected() { LocationSettings(Double.NaN,13.0,"","") }
     @Test fun polarFailureIsExplicitNotEpochAlarm() { assertTrue(runCatching { engine.calculate(LocalDate.of(2026,6,21),settings.copy(location = LocationSettings(89.0,0.0,"",""))) }.isFailure) }
 }

@@ -43,10 +43,13 @@ class AdhanPlaybackService : Service() {
         // Foreground promotion precedes focus request (required for target 35+).
         ServiceCompat.startForeground(this,PrayerNotifications.PLAYBACK_ID,notifications.playback(prayer,intent.getStringExtra("language").orEmpty()),foregroundType)
         releasePlayback()
+        // Request focus as a courtesy so well-behaved apps duck -- but the Adhan plays on the ALARM
+        // stream either way and must never be skipped just because focus was denied (e.g. an active
+        // call, another alarm, or a media app holding it). A missed prayer beats a polite silence.
         focus = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
             .setAudioAttributes(android.media.AudioAttributes.Builder().setUsage(android.media.AudioAttributes.USAGE_ALARM).setContentType(android.media.AudioAttributes.CONTENT_TYPE_SPEECH).build())
-            .setOnAudioFocusChangeListener { change -> if(change < 0) finish() }.setWillPauseWhenDucked(true).build()
-        if(audio.requestAudioFocus(requireNotNull(focus)) != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) { feedback.errors.tryEmit(R.string.playback_failed); finish(); return START_NOT_STICKY }
+            .build()
+        audio.requestAudioFocus(requireNotNull(focus))
         try {
             val uri = intent.getStringExtra("audio")?.toUri() ?: "android.resource://$packageName/${R.raw.adhan_standard}".toUri()
             val exo = ExoPlayer.Builder(this).build()

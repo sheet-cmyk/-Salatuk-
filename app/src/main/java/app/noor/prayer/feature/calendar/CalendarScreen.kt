@@ -10,9 +10,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.noor.prayer.R
+import app.noor.prayer.core.common.clockPattern
 import app.noor.prayer.core.notifications.labelResource
 import app.noor.prayer.domain.*
 import app.noor.prayer.feature.PrayerViewModel
@@ -31,7 +33,8 @@ fun CalendarScreen(vm: PrayerViewModel,settings: PrayerSettings) {
         runCatching { vm.calendar(month,settings) }.onSuccess { rows = it }.onFailure { failed = true; rows = emptyList() }
         loading = false
     }
-    val clock = remember { DateTimeFormatter.ofPattern("HH:mm",Locale.getDefault()) }
+    val context = LocalContext.current
+    val clock = remember(settings.clockFormat) { DateTimeFormatter.ofPattern(clockPattern(settings.clockFormat,context),Locale.US) }
     Column(Modifier.fillMaxSize().padding(20.dp),verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(stringResource(R.string.calendar),style = MaterialTheme.typography.headlineLarge)
         Row(Modifier.fillMaxWidth(),verticalAlignment = Alignment.CenterVertically,horizontalArrangement = Arrangement.SpaceBetween) {

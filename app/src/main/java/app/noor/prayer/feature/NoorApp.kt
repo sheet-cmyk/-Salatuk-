@@ -21,7 +21,7 @@ import app.noor.prayer.feature.calendar.CalendarScreen
 
 private data class Destination(val route: String,val title: Int,val icon: ImageVector)
 @Composable
-fun NoorApp(vm: PrayerViewModel, locate: () -> Unit, exact: () -> Unit, notifications: () -> Unit, appSettings: () -> Unit, import: (Voice) -> Unit) {
+fun NoorApp(vm: PrayerViewModel, locate: () -> Unit, exact: () -> Unit, notifications: () -> Unit, appSettings: () -> Unit, battery: () -> Unit, volume: () -> Unit, import: (Voice) -> Unit) {
     val state by vm.state.collectAsStateWithLifecycle()
     val busy by vm.busy.collectAsStateWithLifecycle()
     val capabilities by vm.capabilities.collectAsStateWithLifecycle()
@@ -43,7 +43,7 @@ fun NoorApp(vm: PrayerViewModel, locate: () -> Unit, exact: () -> Unit, notifica
                 else if(state.settings.location == null) LocationForm(null,busy,true,locate) { value -> vm.update { it.copy(location = value) } }
                 else NavHost(nav,startDestination = "home") {
                     composable("home") { HomeScreen(state,capabilities.exact) { nav.navigate("settings") } }
-                    composable("settings") { SettingsScreen(state.settings,capabilities,busy,vm::update,locate,exact,notifications,appSettings,vm::preview,vm::stop,import) }
+                    composable("settings") { SettingsScreen(state.settings,capabilities,busy,vm::update,locate,exact,notifications,appSettings,battery,volume,vm::preview,vm::stop,import) }
                     composable("calendar") { CalendarScreen(vm,state.settings) }
                 }
             }

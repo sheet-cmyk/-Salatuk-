@@ -20,7 +20,7 @@ import app.noor.prayer.domain.*
 import app.noor.prayer.feature.onboarding.LocationForm
 
 @Composable
-fun SettingsScreen(s: PrayerSettings,caps: Capabilities,busy: Boolean,update: ((PrayerSettings) -> PrayerSettings) -> Unit,locate: () -> Unit,exact: () -> Unit,notifications: () -> Unit,appSettings: () -> Unit,preview: () -> Unit,stop: () -> Unit,import: (Voice) -> Unit) {
+fun SettingsScreen(s: PrayerSettings,caps: Capabilities,busy: Boolean,update: ((PrayerSettings) -> PrayerSettings) -> Unit,locate: () -> Unit,exact: () -> Unit,notifications: () -> Unit,appSettings: () -> Unit,battery: () -> Unit,volume: () -> Unit,preview: () -> Unit,stop: () -> Unit,import: (Voice) -> Unit) {
     var locationDialog by remember { mutableStateOf(false) }
     var help by remember { mutableStateOf(false) }
     if(locationDialog) Dialog(onDismissRequest = { locationDialog = false },properties = DialogProperties(usePlatformDefaultWidth = false)) {
@@ -35,6 +35,14 @@ fun SettingsScreen(s: PrayerSettings,caps: Capabilities,busy: Boolean,update: ((
             Text(stringResource(R.string.exact_body),style = MaterialTheme.typography.bodyMedium)
             Button(onClick = exact) { Text(stringResource(R.string.allow_exact)) }
         } else Text(stringResource(R.string.ready),style = MaterialTheme.typography.labelLarge,color = MaterialTheme.colorScheme.primary)
+        if(!caps.batteryUnrestricted) SettingsGroup(R.string.battery_title) {
+            Text(stringResource(R.string.battery_body),style = MaterialTheme.typography.bodyMedium)
+            Button(onClick = battery) { Text(stringResource(R.string.allow_battery)) }
+        } else Text(stringResource(R.string.battery_ready),style = MaterialTheme.typography.labelLarge,color = MaterialTheme.colorScheme.primary)
+        if(!caps.alarmVolumeOk) SettingsGroup(R.string.volume_title) {
+            Text(stringResource(R.string.volume_body),style = MaterialTheme.typography.bodyMedium)
+            Button(onClick = volume) { Text(stringResource(R.string.allow_volume)) }
+        }
         if(!caps.notifications) SettingsGroup(R.string.notifications) {
             Text(stringResource(R.string.notifications_body),style = MaterialTheme.typography.bodyMedium)
             OutlinedButton(onClick = notifications) { Text(stringResource(R.string.allow_notifications)) }
@@ -65,6 +73,7 @@ fun SettingsScreen(s: PrayerSettings,caps: Capabilities,busy: Boolean,update: ((
         }
         SettingsGroup(R.string.appearance) {
             Choice(stringResource(R.string.appearance),s.appearance,Appearance.entries,{ stringResource(when(it) { Appearance.SYSTEM -> R.string.system; Appearance.LIGHT -> R.string.light; Appearance.DARK -> R.string.dark }) }) { value -> update { it.copy(appearance = value) } }
+            Choice(stringResource(R.string.clock_format),s.clockFormat,ClockFormat.entries,{ stringResource(when(it) { ClockFormat.SYSTEM -> R.string.system; ClockFormat.H24 -> R.string.clock_24h; ClockFormat.H12 -> R.string.clock_12h }) }) { value -> update { it.copy(clockFormat = value) } }
             Choice(stringResource(R.string.language),s.language,listOf("","en","ar","de"),{ when(it) { "en" -> "English"; "ar" -> "العربية"; "de" -> "Deutsch"; else -> stringResource(R.string.system) } }) { value -> update { it.copy(language = value) } }
             Stepper(stringResource(R.string.hijri_adjustment),s.hijriOffset,-2..2) { value -> update { it.copy(hijriOffset = value) } }
             Text(stringResource(R.string.hijri_note),style = MaterialTheme.typography.bodySmall)

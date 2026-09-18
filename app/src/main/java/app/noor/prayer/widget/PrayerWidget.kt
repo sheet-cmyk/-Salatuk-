@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.RemoteViews
 import app.noor.prayer.MainActivity
 import app.noor.prayer.R
+import app.noor.prayer.core.common.clockPattern
 import app.noor.prayer.core.notifications.labelResource
 import app.noor.prayer.di.AppEntryPoint
 import app.noor.prayer.domain.PrayerName
@@ -19,13 +20,13 @@ import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.*
 import java.time.Duration
 import java.time.Instant
-import java.time.chrono.HijrahDate
 import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
 import java.util.Locale
 
-/** RemoteViews keeps the widget light and fully native; the OS refreshes at most every 30 minutes,
- *  so the countdown reflects the remaining time as of the last refresh rather than ticking live. */
+/** RemoteViews keeps the widget light and fully native, so the OS refreshes it at most every 30 minutes.
+ *  The countdown is formatted with Locale.US (not a Chronometer) so the digits stay Latin numerals even
+ *  when the device's regional numeral setting is Eastern Arabic -- Android's Chronometer always renders
+ *  with Locale.getDefault() and can't be overridden per-instance, so it would otherwise show ١٢٣ digits. */
 class PrayerWidget: AppWidgetProvider() {
     override fun onUpdate(context: Context, manager: AppWidgetManager, ids: IntArray) {
         val pending = goAsync()
@@ -56,31 +57,27 @@ class PrayerWidget: AppWidgetProvider() {
 
             val location = settings.location
             if (location == null) {
-                view.setTextViewText(R.id.widget_label,localized.getString(R.string.app_name))
+                view.setTextViewText(R.id.widget_caption,localized.getString(R.string.app_name))
                 view.setTextViewText(R.id.widget_countdown,"—")
-                view.setTextViewText(R.id.widget_location,localized.getString(R.string.open_to_setup))
-                view.setTextViewText(R.id.widget_hijri,"")
-                view.setTextViewText(R.id.widget_sunrise,"")
-                for (i in order.indices) { view.setTextViewText(nameIds[i],""); view.setTextViewText(timeIds[i],""); view.setViewVisibility(markIds[i],View.GONE) }
+                view.setTextViewText(R.id.widget_date,"")
+                view.setTextViewText(R.id.widget_p1_name,localized.getString(R.string.app_name))
+                view.setTextViewText(R.id.widget_p1_time,localized.getString(R.string.open_to_setup))
+                for (i in 1 until order.size) { view.setTextViewText(nameIds[i],""); view.setTextViewText(timeIds[i],"") }
+                for (i in order.indices) view.setViewVisibility(markIds[i],View.GONE)
                 manager.updateAppWidget(ids,view)
                 return
             }
 
             val zone = location.zone()
             val now = Instant.now()
-            val timeFormat = DateTimeFormatter.ofPattern("HH:mm",Locale.US)
+            val timeFormat = DateTimeFormatter.ofPattern(clockPattern(settings.clockFormat,context),Locale.US)
             val today = entry.engine().calculate(now.atZone(zone).toLocalDate(),settings)
             val next = entry.engine().next(settings,now)
 
-            view.setTextViewText(R.id.widget_label,next?.let { localized.getString(R.string.widget_next_in,localized.getString(it.name.labelResource())) } ?: localized.getString(R.string.app_name))
+            view.setTextViewText(R.id.widget_caption,next?.let { localized.getString(R.string.widget_remaining,localized.getString(it.name.labelResource())) } ?: localized.getString(R.string.app_name))
             view.setTextViewText(R.id.widget_countdown,next?.let { countdown(now,it.instant) } ?: "—")
-            view.setTextViewText(R.id.widget_location,location.city.ifBlank { localized.getString(R.string.current_location) })
-
-            val hijri = runCatching { HijrahDate.from(now.atZone(zone).toLocalDate()).plus(settings.hijriOffset.toLong(),ChronoUnit.DAYS).format(DateTimeFormatter.ofPattern("d MMMM yyyy",localized.resources.configuration.locales[0])) }.getOrDefault("")
-            view.setTextViewText(R.id.widget_hijri,"$hijri ${localized.getString(R.string.hijri_suffix)}")
-
-            val sunrise = today.times.firstOrNull { it.name == PrayerName.SUNRISE }
-            view.setTextViewText(R.id.widget_sunrise,sunrise?.instant?.atZone(zone)?.format(timeFormat) ?: "—")
+            val dateFormat = DateTimeFormatter.ofPattern("d MMM",localized.resources.configuration.locales[0])
+            view.setTextViewText(R.id.widget_date,now.atZone(zone).format(dateFormat))
 
             val byName = today.times.associateBy { it.name }
             order.forEachIndexed { i, prayer ->
@@ -98,7 +95,7 @@ class PrayerWidget: AppWidgetProvider() {
             val h = remaining.toHours()
             val m = remaining.toMinutes() % 60
             val s = remaining.seconds % 60
-            return if (h > 0) "%d:%02d".format(h,m) else "%d:%02d".format(m,s)
+            return if (h > 0) String.format(Locale.US,"%d:%02d",h,m) else String.format(Locale.US,"%d:%02d",m,s)
         }
     }
 }

@@ -17,10 +17,12 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import app.noor.prayer.R
+import app.noor.prayer.core.common.clockPattern
 import app.noor.prayer.core.designsystem.*
 import app.noor.prayer.core.notifications.labelResource
 import app.noor.prayer.domain.PrayerName
@@ -37,7 +39,8 @@ fun HomeScreen(state: PrayerUiState,exact: Boolean,settings: () -> Unit) {
     val location = requireNotNull(state.settings.location)
     val date = state.now.atZone(location.zone()).toLocalDate()
     val hijri = runCatching { HijrahDate.from(date).plus(state.settings.hijriOffset.toLong(),ChronoUnit.DAYS).format(DateTimeFormatter.ofPattern("d MMMM yyyy",Locale.getDefault())) }.getOrDefault("")
-    val clock = DateTimeFormatter.ofPattern("HH:mm",Locale.getDefault())
+    val context = LocalContext.current
+    val clock = DateTimeFormatter.ofPattern(clockPattern(state.settings.clockFormat,context),Locale.US)
     LazyColumn(Modifier.fillMaxSize(),contentPadding = PaddingValues(24.dp),verticalArrangement = Arrangement.spacedBy(18.dp)) {
         item {
             Row(Modifier.fillMaxWidth(),verticalAlignment = Alignment.CenterVertically) {
@@ -66,7 +69,7 @@ fun HomeScreen(state: PrayerUiState,exact: Boolean,settings: () -> Unit) {
                         Spacer(Modifier.height(10.dp))
                         Text(stringResource(R.string.remaining),style = MaterialTheme.typography.labelSmall,color = Gold)
                         val seconds = state.next?.let { Duration.between(state.now,it.instant).seconds.coerceAtLeast(0) } ?: 0
-                        Text(String.format(Locale.getDefault(),"%02d:%02d:%02d",seconds / 3600,seconds / 60 % 60,seconds % 60),fontFamily = FontFamily.Monospace,style = MaterialTheme.typography.titleLarge)
+                        Text(String.format(Locale.US,"%02d:%02d:%02d",seconds / 3600,seconds / 60 % 60,seconds % 60),fontFamily = FontFamily.Monospace,style = MaterialTheme.typography.titleLarge)
                     }
                 }
             }

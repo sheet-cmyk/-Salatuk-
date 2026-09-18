@@ -53,6 +53,9 @@
     <string name="system">النظام</string>
     <string name="light">فاتح</string>
     <string name="dark">داكن</string>
+    <string name="clock_format">صيغة الوقت</string>
+    <string name="clock_24h">24 ساعة</string>
+    <string name="clock_12h">12 ساعة</string>
     <string name="language">اللغة</string>
     <string name="hijri_adjustment">تعديل التاريخ الهجري</string>
     <string name="hijri_note">تقويم أم القرى؛ قد تختلف الرؤية المحلية للهلال.</string>
@@ -64,8 +67,15 @@
     <string name="ready">المنبهات الدقيقة جاهزة</string>
     <string name="permission_needed">الإذن مطلوب</string>
     <string name="troubleshooting">مساعدة المنبهات</string>
-    <string name="troubleshooting_body">إذا فاتك الأذان فتحقق من إذن المنبهات الدقيقة وصوت المنبه وقنوات الإشعارات وعدم الإزعاج. تفرض بعض الشركات قيوداً إضافية؛ راجع إعدادات بطارية التطبيق عند الحاجة. لا تعمل المنبهات بعد الإيقاف القسري حتى تعيد فتح التطبيق. افتح قفل الهاتف مرة بعد إعادة تشغيله.</string>
+    <string name="troubleshooting_body">إذا فاتك الأذان فتحقق من إذن المنبهات الدقيقة وتحسين البطارية وصوت المنبه وقنوات الإشعارات وعدم الإزعاج. بعض الشركات (سامسونج، شاومي، هواوي) تضيف قيود بطارية خاصة بها فوق قيود أندرويد — ابحث في إعدادات البطارية عن صلاتك واسمح له بالعمل بلا قيود بالخلفية. لا تعمل المنبهات بعد الإيقاف القسري حتى تعيد فتح التطبيق. افتح قفل الهاتف مرة بعد إعادة تشغيله.</string>
     <string name="app_settings">فتح إعدادات التطبيق</string>
+    <string name="battery_title">إبقاء التطبيق يعمل بالخلفية</string>
+    <string name="battery_body">تحسين البطارية بأندرويد قد يوقف صلاتك قبل تشغيل الأذان، خصوصاً والشاشة مطفأة. استثنِ صلاتك ليعمل دائماً في وقته.</string>
+    <string name="allow_battery">السماح بالعمل بالخلفية</string>
+    <string name="battery_ready">العمل بالخلفية بلا قيود</string>
+    <string name="volume_title">صوت المنبه مغلق</string>
+    <string name="volume_body">يعتمد الأذان على مستوى صوت المنبه، وهو حالياً صامت. ارفعه حتى لا تفوتك صلاة.</string>
+    <string name="allow_volume">رفع صوت المنبه</string>
     <string name="previous_month">الشهر السابق</string>
     <string name="next_month">الشهر التالي</string>
     <string name="date">التاريخ</string>
@@ -91,4 +101,5 @@
     <string name="about_body">صلاتك 1.0 · المواقيت بواسطة Adhan Kotlin. بلا تحليلات أو خادم.</string>
 <string name="city_credit">بيانات المدن دون اتصال: GeoNames، ترخيص CC BY 4.0 · geonames.org.</string>
 <string name="widget_next_in">%1$s بعد</string>
+<string name="widget_remaining">%1$s · متبقي للأذان</string>
 </resources>

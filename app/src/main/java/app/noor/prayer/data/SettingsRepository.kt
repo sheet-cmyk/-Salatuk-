@@ -39,7 +39,7 @@ class SettingsRepository @Inject constructor(@ApplicationContext context: Contex
             CalculationSettings(enum(s("method"), Method.MUSLIM_WORLD_LEAGUE), enum(s("madhhab"), Madhhab.STANDARD), PrayerName.entries.associateWith { i("offset_${it.name}").coerceIn(-60,60) }),
             AdhanSettings(b("adhan"), PrayerName.entries.filter { it.obligatory && b("enabled_${it.name}") }.toSet(), enum(s("voice"), Voice.STANDARD), Voice.entries.mapNotNull { v -> s("audio_${v.name}")?.let { v to it } }.toMap()),
             b("notifications"), i("reminder").takeIf { it in listOf(0,5,10,15,30) } ?: 0,
-            enum(s("appearance"), Appearance.SYSTEM), s("language").orEmpty().takeIf { it in listOf("", "en", "ar", "de") } ?: "", i("hijri").coerceIn(-2,2), s("revision") ?: "initial")
+            enum(s("appearance"), Appearance.DARK), enum(s("clockFormat"), ClockFormat.SYSTEM), s("language").orEmpty().takeIf { it in listOf("", "en", "ar", "de") } ?: "", i("hijri").coerceIn(-2,2), s("revision") ?: "initial")
     }
     private fun encode(s: PrayerSettings, p: MutablePreferences) {
         fun text(k: String, v: String) { p[stringPreferencesKey(k)] = v }
@@ -61,6 +61,6 @@ class SettingsRepository @Inject constructor(@ApplicationContext context: Contex
             else text("audio_${voice.name}", uri)
         }
         bool("notifications",s.notifications); num("reminder",s.reminderMinutes)
-        text("appearance",s.appearance.name); text("language",s.language); num("hijri",s.hijriOffset); text("revision",s.revision)
+        text("appearance",s.appearance.name); text("clockFormat",s.clockFormat.name); text("language",s.language); num("hijri",s.hijriOffset); text("revision",s.revision)
     }
 }

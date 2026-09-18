@@ -53,6 +53,9 @@
     <string name="system">System</string>
     <string name="light">Hell</string>
     <string name="dark">Dunkel</string>
+    <string name="clock_format">Zeitformat</string>
+    <string name="clock_24h">24-Stunden</string>
+    <string name="clock_12h">12-Stunden</string>
     <string name="language">Sprache</string>
     <string name="hijri_adjustment">Hidschri-Datum anpassen</string>
     <string name="hijri_note">Umm-al-Qura-Kalender; lokale Mondsichtungen können abweichen.</string>
@@ -64,8 +67,15 @@
     <string name="ready">Exakte Alarme bereit</string>
     <string name="permission_needed">Berechtigung erforderlich</string>
     <string name="troubleshooting">Hilfe zu Alarmen</string>
-    <string name="troubleshooting_body">Prüfe bei verpassten Alarmen den Zugriff auf exakte Alarme, Weckerlautstärke, Benachrichtigungskanäle und Nicht stören. Manche Hersteller schränken Apps zusätzlich ein; prüfe bei Bedarf die Akku-Einstellungen. Nach erzwungenem Beenden funktionieren Alarme erst nach erneutem Öffnen. Entsperre das Telefon nach einem Neustart einmal.</string>
+    <string name="troubleshooting_body">Prüfe bei verpassten Alarmen den Zugriff auf exakte Alarme, Akkuoptimierung, Weckerlautstärke, Benachrichtigungskanäle und Nicht stören. Manche Hersteller (Samsung, Xiaomi, Huawei) fügen eigene Akkubeschränkungen hinzu -- suche in den Akkueinstellungen deines Telefons nach Salatuk und erlaube uneingeschränkte Hintergrundaktivität. Nach erzwungenem Beenden funktionieren Alarme erst nach erneutem Öffnen. Entsperre das Telefon nach einem Neustart einmal.</string>
     <string name="app_settings">App-Einstellungen öffnen</string>
+    <string name="battery_title">Im Hintergrund aktiv bleiben</string>
+    <string name="battery_body">Die Akkuoptimierung von Android kann Salatuk stoppen, bevor der Adhan spielt, besonders bei ausgeschaltetem Bildschirm. Nimm Salatuk aus, damit er immer pünktlich läuft.</string>
+    <string name="allow_battery">Hintergrundaktivität erlauben</string>
+    <string name="battery_ready">Hintergrundaktivität uneingeschränkt</string>
+    <string name="volume_title">Weckerlautstärke ist aus</string>
+    <string name="volume_body">Der Adhan nutzt deine Weckerlautstärke, die gerade stummgeschaltet ist. Erhöhe sie, damit dir kein Gebet entgeht.</string>
+    <string name="allow_volume">Weckerlautstärke erhöhen</string>
     <string name="previous_month">Vorheriger Monat</string>
     <string name="next_month">Nächster Monat</string>
     <string name="date">Datum</string>
@@ -91,4 +101,5 @@
     <string name="about_body">Salatuk 1.0 · Gebetszeiten mit Adhan Kotlin. Keine Analysen und kein Backend.</string>
 <string name="city_credit">Offline-Städtedaten: GeoNames, CC BY 4.0 · geonames.org.</string>
 <string name="widget_next_in">%1$s in</string>
+<string name="widget_remaining">%1$s · verbleibende Zeit</string>
 </resources>

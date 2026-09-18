@@ -53,6 +53,9 @@
     <string name="system">System</string>
     <string name="light">Light</string>
     <string name="dark">Dark</string>
+    <string name="clock_format">Time format</string>
+    <string name="clock_24h">24-hour</string>
+    <string name="clock_12h">12-hour</string>
     <string name="language">Language</string>
     <string name="hijri_adjustment">Hijri date adjustment</string>
     <string name="hijri_note">Umm al-Qura calendar; local moon observations can differ.</string>
@@ -64,8 +67,15 @@
     <string name="ready">Exact alarms ready</string>
     <string name="permission_needed">Permission needed</string>
     <string name="troubleshooting">Alarm help</string>
-    <string name="troubleshooting_body">If an alarm is missed, check exact-alarm access, alarm volume, notification channels and Do Not Disturb. Some manufacturers restrict apps further: review the app battery settings if needed. A force-stopped app cannot run alarms until you open it again. After restarting the phone, unlock it once.</string>
+    <string name="troubleshooting_body">If an alarm is missed, check exact-alarm access, battery optimization, alarm volume, notification channels and Do Not Disturb. Some manufacturers (Samsung, Xiaomi, Huawei) add their own "sleeping apps" or "auto-start" battery limits on top of Android\'s -- search your phone\'s battery settings for Salatuk and allow it to run unrestricted in the background. A force-stopped app cannot run alarms until you open it again. After restarting the phone, unlock it once.</string>
     <string name="app_settings">Open app settings</string>
+    <string name="battery_title">Keep running in the background</string>
+    <string name="battery_body">Android battery optimization can stop Salatuk before it plays the Adhan, especially with the screen off. Exempt Salatuk so it always runs on time.</string>
+    <string name="allow_battery">Allow background activity</string>
+    <string name="battery_ready">Background activity unrestricted</string>
+    <string name="volume_title">Alarm volume is off</string>
+    <string name="volume_body">The Adhan plays on your alarm volume, which is currently muted. Raise it so you don\'t miss a prayer.</string>
+    <string name="allow_volume">Raise alarm volume</string>
     <string name="previous_month">Previous month</string>
     <string name="next_month">Next month</string>
     <string name="date">Date</string>
@@ -91,4 +101,5 @@
     <string name="about_body">Salatuk 1.0 · Prayer times by Adhan Kotlin. No analytics or backend.</string>
 <string name="city_credit">Offline city data: GeoNames, CC BY 4.0 · geonames.org.</string>
 <string name="widget_next_in">%1$s in</string>
+<string name="widget_remaining">%1$s · time left</string>
 </resources>

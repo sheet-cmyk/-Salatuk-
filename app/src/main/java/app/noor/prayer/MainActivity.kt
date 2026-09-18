@@ -2,6 +2,7 @@ package app.noor.prayer
 
 import android.Manifest
 import android.content.Intent
+import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -59,10 +60,17 @@ class MainActivity : AppCompatActivity() {
             exact = { if(Build.VERSION.SDK_INT >= 31) open(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM,"package:$packageName".toUri())) },
             notifications = { if(Build.VERSION.SDK_INT >= 33) notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS) else appSettings() },
             appSettings = ::appSettings,
+            battery = ::requestBattery,
+            volume = ::raiseAlarmVolume,
             import = { voice -> importVoice = voice; audioPicker.launch(arrayOf("audio/*")) }) }
     }
     private fun open(intent: Intent) { runCatching { startActivity(intent) }.onFailure { vm.message.value = R.string.schedule_failed } }
     private fun appSettings() = open(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,"package:$packageName".toUri()))
+    private fun requestBattery() = open(Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,"package:$packageName".toUri()))
+    private fun raiseAlarmVolume() {
+        val audio = getSystemService(AudioManager::class.java)
+        audio.adjustStreamVolume(AudioManager.STREAM_ALARM,AudioManager.ADJUST_RAISE,AudioManager.FLAG_SHOW_UI)
+    }
     override fun onResume() { super.onResume(); vm.resume() }
     override fun onSaveInstanceState(outState: Bundle) { outState.putString("importVoice",importVoice.name); super.onSaveInstanceState(outState) }
 }
