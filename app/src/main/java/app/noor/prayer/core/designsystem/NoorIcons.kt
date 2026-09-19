@@ -27,4 +27,9 @@ object NoorIcons {
     val ExpandMore = icon("ExpandMore","M6,9 L12,15 L18,9")
     val KeyboardArrowLeft = icon("KeyboardArrowLeft","M15,5 L8,12 L15,19", true)
     val KeyboardArrowRight = icon("KeyboardArrowRight","M9,5 L16,12 L9,19", true)
+    val Radio = icon("Radio","M4,10 L20,10 L20,19 L4,19 Z M6,10 L4,4 M17,4 Q20,6 17,8 M8,14 A1,1 0,1 1,7.99,14 M11,13 L17,13 M11,16 L15,16")
+    val PlayArrow = icon("PlayArrow","M7,4 L19,12 L7,20 Z")
+    val Pause = icon("Pause","M7,4 L11,4 L11,20 L7,20 Z M13,4 L17,4 L17,20 L13,20 Z")
+    val SkipNext = icon("SkipNext","M6,5 L16,12 L6,19 Z M17,5 L17,19")
+    val SkipPrevious = icon("SkipPrevious","M18,5 L8,12 L18,19 Z M7,5 L7,19")
 }

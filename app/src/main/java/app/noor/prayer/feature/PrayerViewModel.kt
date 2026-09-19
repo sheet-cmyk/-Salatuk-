@@ -17,7 +17,8 @@ import javax.inject.Inject
 
 data class PrayerUiState(val loaded: Boolean = false, val settings: PrayerSettings = PrayerSettings(), val daily: DailyPrayerTimes? = null, val next: PrayerTime? = null, val now: Instant = Instant.now(), val calculationError: Boolean = false)
 @HiltViewModel
-class PrayerViewModel @Inject constructor(private val repository: SettingsRepository, private val schedules: PrayerScheduleRepository, private val location: LocationRepository, private val capabilitiesRepository: CapabilityRepository, private val playback: PlaybackController, private val audio: AudioRepository, private val feedback: PlaybackFeedback, val engine: PrayerEngine): ViewModel() {
+class PrayerViewModel @Inject constructor(private val repository: SettingsRepository, private val schedules: PrayerScheduleRepository, private val location: LocationRepository, private val capabilitiesRepository: CapabilityRepository, private val playback: PlaybackController, private val audio: AudioRepository, private val feedback: PlaybackFeedback, val engine: PrayerEngine, private val radioController: RadioController, radioRepository: RadioRepository): ViewModel() {
+    val radio: StateFlow<RadioState> = radioRepository.state
     private val ticker = flow { while(currentCoroutineContext().isActive) { emit(Instant.now()); delay(1000) } }
     private var cachedKey = ""
     private var daily: DailyPrayerTimes? = null
@@ -66,4 +67,9 @@ class PrayerViewModel @Inject constructor(private val repository: SettingsReposi
         catch(_: Exception) { message.value = R.string.audio_failed }
     } }
     suspend fun calendar(month: YearMonth, settings: PrayerSettings): List<DailyPrayerTimes> = withContext(Dispatchers.Default) { (1..month.lengthOfMonth()).map { engine.calculate(month.atDay(it),settings) } }
+    fun playStation(stationId: String) { if(!radioController.play(stationId)) message.value = R.string.playback_failed }
+    fun toggleRadio() { if(!radioController.toggle()) message.value = R.string.playback_failed }
+    fun nextStation() = radioController.next()
+    fun previousStation() = radioController.previous()
+    fun stopRadio() = radioController.stop()
 }

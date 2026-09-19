@@ -98,8 +98,18 @@
     <string name="on_device">CALCULATED ON YOUR DEVICE</string>
     <string name="hijri_suffix">AH</string>
     <string name="about">About Salatuk</string>
-    <string name="about_body">Salatuk 1.0 · Prayer times by Adhan Kotlin. No analytics or backend.</string>
+    <string name="about_body">Salatuk 1.0 · Prayer times by Adhan Kotlin. Quran radio streams from public mp3quran.net servers when you choose to play one. No analytics, accounts or ads.</string>
 <string name="city_credit">Offline city data: GeoNames, CC BY 4.0 · geonames.org.</string>
 <string name="widget_next_in">%1$s in</string>
 <string name="widget_remaining">%1$s · time left</string>
+<string name="radio">Radio</string>
+<string name="widget_radio_default">Quran Radio</string>
+<string name="radio_previous">Previous station</string>
+<string name="radio_toggle">Play or pause</string>
+<string name="radio_next">Next station</string>
+<string name="radio_playing">Playing</string>
+<string name="radio_paused">Paused</string>
+<string name="radio_buffering">Buffering…</string>
+<string name="radio_stop">Stop radio</string>
+<string name="radio_credit">Live Quran recitation streams via mp3quran.net.</string>
 </resources>

@@ -18,6 +18,7 @@ import app.noor.prayer.feature.home.HomeScreen
 import app.noor.prayer.feature.settings.SettingsScreen
 import app.noor.prayer.feature.onboarding.LocationForm
 import app.noor.prayer.feature.calendar.CalendarScreen
+import app.noor.prayer.feature.radio.RadioScreen
 
 private data class Destination(val route: String,val title: Int,val icon: ImageVector)
 @Composable
@@ -31,7 +32,7 @@ fun NoorApp(vm: PrayerViewModel, locate: () -> Unit, exact: () -> Unit, notifica
     val snackbar = remember { SnackbarHostState() }
     val errorText = message?.let { stringResource(it) }
     LaunchedEffect(errorText) { errorText?.let { snackbar.showSnackbar(it); vm.clearMessage() } }
-    val destinations = listOf(Destination("home",R.string.home,NoorIcons.Home),Destination("calendar",R.string.calendar,NoorIcons.CalendarMonth),Destination("settings",R.string.settings,NoorIcons.Tune))
+    val destinations = listOf(Destination("home",R.string.home,NoorIcons.Home),Destination("calendar",R.string.calendar,NoorIcons.CalendarMonth),Destination("radio",R.string.radio,NoorIcons.Radio),Destination("settings",R.string.settings,NoorIcons.Tune))
     NoorTheme(state.settings.appearance) {
         Scaffold(snackbarHost = { SnackbarHost(snackbar) },bottomBar = {
             if(state.loaded && state.settings.location != null) NavigationBar(containerColor = MaterialTheme.colorScheme.surface,tonalElevation = 0.dp) {
@@ -45,6 +46,7 @@ fun NoorApp(vm: PrayerViewModel, locate: () -> Unit, exact: () -> Unit, notifica
                     composable("home") { HomeScreen(state,capabilities.exact) { nav.navigate("settings") } }
                     composable("settings") { SettingsScreen(state.settings,capabilities,busy,vm::update,locate,exact,notifications,appSettings,battery,volume,vm::preview,vm::stop,import) }
                     composable("calendar") { CalendarScreen(vm,state.settings) }
+                    composable("radio") { RadioScreen(vm) }
                 }
             }
         }

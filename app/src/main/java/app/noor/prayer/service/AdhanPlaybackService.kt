@@ -43,6 +43,10 @@ class AdhanPlaybackService : Service() {
         // Foreground promotion precedes focus request (required for target 35+).
         ServiceCompat.startForeground(this,PrayerNotifications.PLAYBACK_ID,notifications.playback(prayer,intent.getStringExtra("language").orEmpty()),foregroundType)
         releasePlayback()
+        // Adhan must never share airtime with the Quran radio -- stop it outright rather than
+        // relying on audio-focus ducking, since focus ducking would leave it silently paused
+        // and liable to resume mid-Adhan once focus is abandoned.
+        startService(Intent(this,RadioPlaybackService::class.java).setAction(RadioPlaybackService.STOP))
         // Request focus as a courtesy so well-behaved apps duck -- but the Adhan plays on the ALARM
         // stream either way and must never be skipped just because focus was denied (e.g. an active
         // call, another alarm, or a media app holding it). A missed prayer beats a polite silence.

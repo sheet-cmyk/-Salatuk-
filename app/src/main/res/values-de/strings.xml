@@ -98,8 +98,18 @@
     <string name="on_device">AUF DEINEM GERÄT BERECHNET</string>
     <string name="hijri_suffix">AH</string>
     <string name="about">Über Salatuk</string>
-    <string name="about_body">Salatuk 1.0 · Gebetszeiten mit Adhan Kotlin. Keine Analysen und kein Backend.</string>
+    <string name="about_body">Salatuk 1.0 · Gebetszeiten mit Adhan Kotlin. Koranradio wird von öffentlichen mp3quran.net-Servern gestreamt, wenn du es startest. Keine Analysen, Konten oder Werbung.</string>
 <string name="city_credit">Offline-Städtedaten: GeoNames, CC BY 4.0 · geonames.org.</string>
 <string name="widget_next_in">%1$s in</string>
 <string name="widget_remaining">%1$s · verbleibende Zeit</string>
+<string name="radio">Radio</string>
+<string name="widget_radio_default">Koran-Radio</string>
+<string name="radio_previous">Vorheriger Sender</string>
+<string name="radio_toggle">Abspielen oder pausieren</string>
+<string name="radio_next">Nächster Sender</string>
+<string name="radio_playing">Spielt gerade</string>
+<string name="radio_paused">Pausiert</string>
+<string name="radio_buffering">Wird geladen…</string>
+<string name="radio_stop">Radio stoppen</string>
+<string name="radio_credit">Live-Koranrezitation über mp3quran.net.</string>
 </resources>

@@ -13,6 +13,7 @@ import app.noor.prayer.MainActivity
 import app.noor.prayer.R
 import app.noor.prayer.domain.*
 import app.noor.prayer.service.AdhanPlaybackService
+import app.noor.prayer.service.RadioPlaybackService
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.Locale
 import javax.inject.Inject
@@ -24,7 +25,7 @@ fun PrayerName.labelResource() = when(this) {
 }
 @Singleton
 class PrayerNotifications @Inject constructor(@ApplicationContext private val context: Context) {
-    companion object { const val PLAYBACK = "playback"; const val PRAYER = "prayer"; const val REMINDER = "reminder"; const val PLAYBACK_ID = 50 }
+    companion object { const val PLAYBACK = "playback"; const val PRAYER = "prayer"; const val REMINDER = "reminder"; const val PLAYBACK_ID = 50; const val RADIO_ID = 51 }
     fun channels() {
         val manager = context.getSystemService(NotificationManager::class.java)
         manager.createNotificationChannels(listOf(
@@ -44,6 +45,18 @@ class PrayerNotifications @Inject constructor(@ApplicationContext private val co
             .setContentText(c.getString(R.string.prayer_now,c.getString(prayer.labelResource())))
             .setContentIntent(open()).setOngoing(true).setOnlyAlertOnce(true).setCategory(NotificationCompat.CATEGORY_TRANSPORT)
             .apply { session?.let { setStyle(androidx.media3.session.MediaStyleNotificationHelper.MediaStyle(it).setShowActionsInCompactView(0)) } }.setVisibility(NotificationCompat.VISIBILITY_PUBLIC).addAction(R.drawable.ic_stop,c.getString(R.string.stop_adhan),stop).build()
+    }
+    @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
+    fun radio(stationName: String, playing: Boolean, session: androidx.media3.session.MediaSession? = null): Notification {
+        fun action(code: Int, action: String) = PendingIntent.getService(context,code,Intent(context,RadioPlaybackService::class.java).setAction(action),PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        return NotificationCompat.Builder(context,PLAYBACK).setSmallIcon(R.drawable.ic_widget_radio)
+            .setContentTitle(stationName).setContentText(context.getString(R.string.radio))
+            .setContentIntent(open()).setOngoing(playing).setOnlyAlertOnce(true).setCategory(NotificationCompat.CATEGORY_TRANSPORT)
+            .addAction(R.drawable.ic_skip_prev,context.getString(R.string.radio_previous),action(2,RadioPlaybackService.PREV))
+            .addAction(if(playing) R.drawable.ic_pause else R.drawable.ic_play,context.getString(R.string.radio_toggle),action(3,RadioPlaybackService.TOGGLE))
+            .addAction(R.drawable.ic_skip_next,context.getString(R.string.radio_next),action(4,RadioPlaybackService.NEXT))
+            .apply { session?.let { setStyle(androidx.media3.session.MediaStyleNotificationHelper.MediaStyle(it).setShowActionsInCompactView(0,1,2)) } }
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC).build()
     }
     fun notify(alarm: PrayerAlarm, settings: PrayerSettings, failed: Boolean = false) {
         if (!NotificationManagerCompat.from(context).areNotificationsEnabled()) return

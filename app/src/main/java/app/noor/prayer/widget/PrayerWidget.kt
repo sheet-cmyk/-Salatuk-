@@ -13,9 +13,11 @@ import android.widget.RemoteViews
 import app.noor.prayer.MainActivity
 import app.noor.prayer.R
 import app.noor.prayer.core.common.clockPattern
+import app.noor.prayer.core.media.RadioState
 import app.noor.prayer.core.notifications.labelResource
 import app.noor.prayer.di.AppEntryPoint
 import app.noor.prayer.domain.PrayerName
+import app.noor.prayer.service.RadioPlaybackService
 import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.*
 import java.time.Duration
@@ -53,7 +55,10 @@ class PrayerWidget: AppWidgetProvider() {
             val view = RemoteViews(context.packageName,R.layout.prayer_widget)
             view.setInt(R.id.widget_root,"setLayoutDirection",localized.resources.configuration.layoutDirection)
             view.setInt(R.id.widget_row_prayers,"setLayoutDirection",View.LAYOUT_DIRECTION_LTR)
+            view.setInt(R.id.widget_radio_row,"setLayoutDirection",View.LAYOUT_DIRECTION_LTR)
             view.setOnClickPendingIntent(R.id.widget_root,PendingIntent.getActivity(context,20,Intent(context,MainActivity::class.java),PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
+
+            applyRadio(view,context,localized,entry.radio().state.value)
 
             val location = settings.location
             if (location == null) {
@@ -88,6 +93,15 @@ class PrayerWidget: AppWidgetProvider() {
             }
 
             manager.updateAppWidget(ids,view)
+        }
+
+        private fun applyRadio(view: RemoteViews, context: Context, localized: Context, radio: RadioState) {
+            view.setTextViewText(R.id.widget_radio_label,radio.stationName.ifBlank { localized.getString(R.string.widget_radio_default) })
+            view.setImageViewResource(R.id.widget_radio_toggle,if (radio.playing) R.drawable.ic_widget_pause_dark else R.drawable.ic_widget_play_dark)
+            fun action(name: String, code: Int) = PendingIntent.getForegroundService(context,code,Intent(context,RadioPlaybackService::class.java).setAction(name),PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            view.setOnClickPendingIntent(R.id.widget_radio_prev,action(RadioPlaybackService.PREV,31))
+            view.setOnClickPendingIntent(R.id.widget_radio_toggle,action(RadioPlaybackService.TOGGLE,32))
+            view.setOnClickPendingIntent(R.id.widget_radio_next,action(RadioPlaybackService.NEXT,33))
         }
 
         private fun countdown(now: Instant, target: Instant): String {

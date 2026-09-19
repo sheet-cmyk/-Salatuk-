@@ -98,8 +98,18 @@
     <string name="on_device">محسوبة على جهازك</string>
     <string name="hijri_suffix">هـ</string>
     <string name="about">عن صلاتك</string>
-    <string name="about_body">صلاتك 1.0 · المواقيت بواسطة Adhan Kotlin. بلا تحليلات أو خادم.</string>
+    <string name="about_body">صلاتك 1.0 · المواقيت بواسطة Adhan Kotlin. إذاعات القرآن تُبث من خوادم mp3quran.net العامة عند اختيارك تشغيلها. بلا تحليلات أو حسابات أو إعلانات.</string>
 <string name="city_credit">بيانات المدن دون اتصال: GeoNames، ترخيص CC BY 4.0 · geonames.org.</string>
 <string name="widget_next_in">%1$s بعد</string>
 <string name="widget_remaining">%1$s · متبقي للأذان</string>
+<string name="radio">راديو</string>
+<string name="widget_radio_default">راديو القرآن</string>
+<string name="radio_previous">المحطة السابقة</string>
+<string name="radio_toggle">تشغيل أو إيقاف مؤقت</string>
+<string name="radio_next">المحطة التالية</string>
+<string name="radio_playing">يعمل الآن</string>
+<string name="radio_paused">متوقف مؤقتاً</string>
+<string name="radio_buffering">جارٍ التحميل…</string>
+<string name="radio_stop">إيقاف الراديو</string>
+<string name="radio_credit">بث حي لتلاوات القرآن الكريم عبر mp3quran.net.</string>
 </resources>
